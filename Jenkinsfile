@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Install') {
             steps {
-                bat 'npm install'
+                bat 'npm ci'
             }
         }
         stage('Test') {
@@ -25,6 +25,15 @@ pipeline {
             steps {
                 bat 'npx vercel --prod --yes --token=%VERCEL_TOKEN%'
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment successful!'
+        }
+        failure {
+            echo 'Pipeline failed! Check logs.'
         }
     }
 }
